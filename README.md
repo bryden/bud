@@ -6,7 +6,8 @@ bud.sh is an automated incremental backup script for mysql databases. It creates
 Install
 --------------
 To install bud.sh run the following commands:
-  git clone https://github.com/bryden/bud.git
+
+    git clone https://github.com/bryden/bud.git
 
 Configure
 --------------
