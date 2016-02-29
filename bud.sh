@@ -8,6 +8,8 @@ PASS="root" # the mysql admin password
 BACKDIR="mysql-bak" # the directory where you setup your mysql-bak folder
 FULLBACKUPLIFE=3600 # how often a full backup (rather than incremental) should be completed
 DATABASE="webholistics" # the database that should be targeted for back-up
+EMAIL="bryden@arndt.ca" # your email address for success/failure notifications
+NOTIFY_SUCCESS="YES" # notify on success? YES/NO
 
 #################################
 # SYSTEM SETTINGS - DO NOT EDIT #
@@ -45,7 +47,12 @@ then
     echo "HALTED: MySQL does not appear to be running."; echo
     exit 1
 fi
- 
+
+echo "Checking for mysql datadir"
+DATADIR=`mysql -u $USER --password=$PASS -e 'SHOW VARIABLES WHERE Variable_Name = "datadir"' | grep mysql | awk '{print $2}'`
+
+echo "Datadir: $DATADIR"
+
 echo "Setup check completed fantastically. Good work."
 echo "Checking for latest backup file..."
 
@@ -94,5 +101,8 @@ else
     # Create a new full backup
     echo "Saving to $BASEBACKDIR/$TMPFILE"
     mysqldump -u $USER --password=$PASS $DATABASE > $BASEBACKDIR/$TMPFILE
+    MESSAGE="Full backup of MySQL completed successfully for $DATABASE.\n"
+    MESSAGE="$MESSAGE $BASEBACKDIR/$TMPFILE\n"
+    echo $MESSAGE | mail -s "BUD: Full backup successful" "$EMAIL"
 fi
 
