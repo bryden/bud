@@ -8,6 +8,11 @@ Authors
 --------------
 Bryden Arndt at webHolistics: http://www.webholistics.ca/
 
+Dependencies
+--------------
+1. Postfix and mail-utils (ubuntu)
+2. MySQL
+
 Install
 --------------
 
