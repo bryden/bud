@@ -31,7 +31,7 @@ Move the bud.sh script to /etc/cron.daily folder
 
         sudo mv bud.sh /etc/cron.daily
 
-LICENSE
+License
 =================
 Copyright (c) 2016 Bryden Arndt
 
