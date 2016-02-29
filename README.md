@@ -13,8 +13,8 @@ Dependencies
 1. Postfix and mail-utils (ubuntu)
 2. MySQL
 
-Install
---------------
+Installation
+==============
 
 1. To download bud.sh run the following commands:
 
