@@ -85,6 +85,7 @@ then
     fi
 
     # Create incremental backup
+    echo "Incremental export happening"
     mysqlbackup -u $USER -p $PASS --incremental
 else
     echo "New full backup"
