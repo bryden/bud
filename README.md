@@ -8,8 +8,13 @@ Authors
 --------------
 Bryden Arndt at webHolistics: http://www.webholistics.ca/
 
-Install
+Dependencies
 --------------
+1. Postfix and mail-utils (ubuntu)
+2. MySQL
+
+Installation
+==============
 
 1. To download bud.sh run the following commands:
 
