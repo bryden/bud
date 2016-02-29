@@ -31,10 +31,6 @@ Move the bud.sh script to /etc/cron.daily folder
 
         sudo mv bud.sh /etc/cron.daily
 
-Configure
---------------
-To configure bud.sh, just open bud.sh with your favourite txt editor (mine's vi!) and update the settings you see at the top of the file.
-
 LICENSE
 =================
 Copyright (c) 2016 Bryden Arndt
