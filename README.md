@@ -11,11 +11,13 @@ Install
         
 2. Enable row-based logging in MySQL
 In /etc/my.cnf add these lines:
+
         log-bin = mysql-bin
         binlog_format = ROW
 
 3. Configure bud.sh to meet specific needs
 Open bud.sh and set the variables at the top of the file:
+
         ####################################
         # USER SETTINGS - PLEASE CONFIGURE #
         ####################################
@@ -26,6 +28,7 @@ Open bud.sh and set the variables at the top of the file:
         DATABASE="webholistics" # the database that should be targeted for back-up
 4. Setup cron job
 Move the bud.sh script to /etc/cron.daily folder
+
         sudo mv bud.sh /etc/cron.daily
 
 Configure
