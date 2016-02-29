@@ -6,20 +6,15 @@ Install
 --------------
 
 1. To download bud.sh run the following commands:
-
         git clone https://github.com/bryden/bud.git
 
 2. Enable row-based logging in MySQL
-
 In /etc/my.cnf add these lines:
-
         log-bin = mysql-bin
         binlog_format = ROW
 
 3. Configure bud.sh to meet specific needs
-
 Open bud.sh and set the variables at the top of the file:
-
         ####################################
         # USER SETTINGS - PLEASE CONFIGURE #
         ####################################
@@ -28,11 +23,8 @@ Open bud.sh and set the variables at the top of the file:
         BACKDIR="mysql-bak" # the directory where you setup your mysql-bak folder
         FULLBACKUPLIFE=3600 # how often a full backup (rather than incremental) should be completed
         DATABASE="webholistics" # the database that should be targeted for back-up
-
 4. Setup cron job
-
 Move the bud.sh script to /etc/cron.daily folder
-
         sudo mv bud.sh /etc/cron.daily
 
 Configure
