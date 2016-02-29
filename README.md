@@ -11,7 +11,8 @@ Install
 
         git clone https://github.com/bryden/bud.git
         
-2. Enable row-based logging in MySQL
+2. Enable row-based logging in MySQL.
+
 In /etc/my.cnf add these lines:
 
         log-bin = mysql-bin
