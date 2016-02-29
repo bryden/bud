@@ -6,8 +6,7 @@ The bud.sh script is free, like beer. See License below.
 
 Authors
 --------------
-Bryden Arndt
-http://www.webholistics.ca/
+Bryden Arndt at webHolistics: http://www.webholistics.ca/
 
 Install
 --------------
