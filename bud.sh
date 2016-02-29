@@ -1,19 +1,21 @@
 #!/bin/bash
 
+####################################
+# USER SETTINGS - PLEASE CONFIGURE #
+####################################
+USER="root" # a mysql admin user account
+PASS="root" # the mysql admin password
+BACKDIR="mysql-bak" # the directory where you setup your mysql-bak folder
+FULLBACKUPLIFE=3600 # how often a full backup (rather than incremental) should be completed
+DATABASE="webholistics" # the database that should be targeted for back-up
 
-###################
-# CONFIG/SETTINGS #
-###################
-
-USER="root"
-PASS="root"
-BACKDIR="mysql-bak"
-BASEBACKDIR="$BACKDIR/base"
-INCRBACKDIR="$BACKDIR/incr"
-FULLBACKUPLIFE=3600
-START=`date +%s`
-TMPFILE="$START.sql"
-DATABASE="webholistics"
+#################################
+# SYSTEM SETTINGS - DO NOT EDIT #
+#################################
+BASEBACKDIR="$BACKDIR/base" # leave as-is
+INCRBACKDIR="$BACKDIR/incr" # leave as-is
+START=`date +%s` # leave as-is
+TMPFILE="$START.sql" # leave as-is
 
 
 ########
