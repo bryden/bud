@@ -1,4 +1,4 @@
-bud.sh
+About bud.sh
 ==============
 bud.sh (back/up/date) is an automated incremental backup script for MySQL databases. It creates a full backup once/week. It's free, like beer, see License below.
 
