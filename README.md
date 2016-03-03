@@ -21,7 +21,7 @@ Installation
         git clone https://github.com/bryden/bud.git
         
 2. Enable row-based logging in MySQL.
-In /etc/my.cnf add these lines:
+In /etc/my.cnf add these lines *under the MYSQLD section*:
 
         log-bin = mysql-bin
         binlog_format = ROW
