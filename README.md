@@ -38,6 +38,7 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
         DATABASE="webholistics" # the database that should be targeted for back-up
 4. This file has database passwords so we should restrict access.
 
+        sudo chown root:root bud.sh
         sudo chmod 700 bud.sh
 
 5. Setup cron job. Move the bud.sh script to /etc/cron.daily folder
