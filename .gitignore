@@ -1,4 +1,3 @@
 *.swp
 mysql-bak/base/*
-mysql-bak/incr/*
 .idea/*
