@@ -36,6 +36,9 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
         BACKDIR="mysql-bak" # the directory where you setup your mysql-bak folder
         FULLBACKUPLIFE=3600 # how often a full backup (rather than incremental) should be completed
         DATABASE="webholistics" # the database that should be targeted for back-up
+        EMAIL="bryden@arndt.ca" # your email address for success/failure notifications
+        NOTIFY_SUCCESS="YES" # notify on success? YES/NO
+
 4. This file has database passwords so we should restrict access:
 
         sudo chown root:root bud.sh
