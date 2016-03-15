@@ -5,24 +5,24 @@
 ####################################
 USER="root" # a mysql admin user account
 PASS="root" # the mysql admin password
-BACKDIR="mysql-bak" # the directory where you setup your mysql-bak folder
-FULLBACKUPLIFE=3600 # how often a full backup (rather than incremental) should be completed
-DATABASE="webholistics" # the database that should be targeted for back-up
-EMAIL="bryden@arndt.ca" # your email address for success/failure notifications
-NOTIFY_SUCCESS="YES" # notify on success? YES/NO
+BACKDIR="/home/brydena/mysql-bak" # the directory where you setup your mysql-bak folder
+FULLBACKUPLIFE=4320 # how often a full backup (rather than incremental) should be completed (4320 == 3 days)
+DATABASE="" # the database that should be targeted for back-up
+EMAIL="" # your email address for success/failure notifications
+#NOTIFY_SUCCESS="YES" # notify on success? YES/NO
 
 ####################################
 # ONLY REQUIRED FOR REMOTE BACKUPS #
 ####################################
-REMOTEUSER="bryden" # the username that you have setup for ssh
-REMOTEHOST="webholistics.ca"
-REMOTEDIR="/var/backups/"
+REMOTEUSER="" # the username that you have setup for ssh
+REMOTEHOST="" # the hostname of the server to ssh into
+REMOTEDIR="/home/arndtb/bud/" # the remote directory to copy backups to
 
 #################################
 # SYSTEM SETTINGS - DO NOT EDIT #
 #################################
-BASEBACKDIR="$BACKDIR/base" # leave as-is
-INCRBACKDIR="$BACKDIR/incr" # leave as-is
+BASEBACKDIR="$BACKDIR/$DATABASE" # leave as-is
+#INCRBACKDIR="$BACKDIR/incr" # leave as-is
 START=`date +%s` # leave as-is
 TMPFILE="$DATABASE-$START.sql" # leave as-is
 
@@ -59,18 +59,24 @@ LATEST=`find $BASEBACKDIR -mindepth 1 -maxdepth 1 -printf "%P\n" | sort -nr | he
 AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
 #echo "AGE : $AGE\n LATEST : $LATEST"
 
-if [ "$LATEST" -a `expr $AGE + $FULLBACKUPLIFE + 5` -ge $START ]
-then
-    echo 'BUD: Transferring backups remotely.'
-    scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR
+#if [ "$LATEST" -a `expr $AGE + $FULLBACKUPLIFE + 5` -ge $START ]
+#then
 
-else
+#else
     echo "BUD: New full backup"
     # Create a new full backup
     echo "BUD: Saving to $BASEBACKDIR/$TMPFILE"
     mysqldump -u $USER --password=$PASS $DATABASE > $BASEBACKDIR/$TMPFILE
+
+    # Email notification to admin
     MESSAGE="Full backup of MySQL completed successfully for $DATABASE.\n"
     MESSAGE="$MESSAGE $BASEBACKDIR/$TMPFILE\n"
     echo $MESSAGE | mail -s "BUD: Full backup successful" "$EMAIL"
-fi
+
+    # Copy the database to a remote folder
+    echo 'BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR'
+    scp $BASEBACKDIR/$LATEST $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR
+
+    echo 'BUD: Exiting. Goodbye.'
+#fi
 
