@@ -74,8 +74,8 @@ AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
     echo $MESSAGE | mail -s "BUD: Full backup successful" "$EMAIL"
 
     # Copy the database to a remote folder
-    echo 'BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR'
-    scp $BASEBACKDIR/$LATEST $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR
+    echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
+    scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
 
     echo 'BUD: Exiting. Goodbye.'
 #fi
