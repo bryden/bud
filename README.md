@@ -41,10 +41,30 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
 
 4. This file has database passwords so we should restrict access:
 
-        sudo chown root:root bud.sh
         sudo chmod 700 bud.sh
 
-5. Setup cron job. Move the bud.sh script to /etc/cron.daily folder:
+5. Setup an ssh key for the script so that it can send a copy remotely without requiring a user to enter their password.
+
+        ssh-keygen -t rsa
+        Generating public/private rsa key pair.
+        Enter a file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]
+        Enter passphrase (empty for no passphrase): [Type a passphrase]
+        Enter same passphrase again: [Type passphrase again]
+
+    Copy your ssh key to the remote host 
+
+        ssh-copy-id user@hostname.example.com
+
+    Add your ssh key
+    
+        ssh-add
+
+    Test the ssh connection and then exit
+
+        ssh user@hostname.example.com
+        exit
+
+6. Setup cron job. Move the bud.sh script to /etc/cron.daily folder:
 
         sudo mv bud.sh /etc/cron.daily
 
