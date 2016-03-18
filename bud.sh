@@ -67,6 +67,8 @@ AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
     # Create a new full backup
     echo "BUD: Saving to $BASEBACKDIR/$TMPFILE"
     mysqldump -u $USER --password=$PASS $DATABASE > $BASEBACKDIR/$TMPFILE
+    tar -zcvf $BASEBACKDIR/$TMPFILE.tar.gz $BASEBACKDIR/$TMPFILE
+    TMPFILE="$TMPFILE.tar.gz"
 
     # Email notification to admin
     MESSAGE="Full backup of MySQL completed successfully for $DATABASE.\n"
