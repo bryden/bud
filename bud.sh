@@ -42,7 +42,7 @@ fi
 
 if [ -z "`mysqladmin -u $USER --password=$PASS status | grep 'Uptime'`" ]
 then
-    echo "BUD: HALTED! MySQL does not appear to be running."; echo
+    echo "BUD: HALTED! MySQL does not appear to be running or mysql user/pass is incorrect."; echo
     exit 1
 fi
 
@@ -79,8 +79,8 @@ AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
     # Copy the database to a remote folder
     echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
     scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
-    echo "BUD: Last backup was $LATEST"
-
+    echo "BUD: Removing last backup: $LATEST"
+    rm $BASEBACKDIR/$LATEST
     echo 'BUD: Exiting. Goodbye.'
 #fi
 
