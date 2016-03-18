@@ -68,6 +68,7 @@ AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
     echo "BUD: Saving to $BASEBACKDIR/$TMPFILE"
     mysqldump -u $USER --password=$PASS $DATABASE > $BASEBACKDIR/$TMPFILE
     tar -zcvf $BASEBACKDIR/$TMPFILE.tar.gz $BASEBACKDIR/$TMPFILE
+    rm $BASEBACKDIR/$TMPFILE
     TMPFILE="$TMPFILE.tar.gz"
 
     # Email notification to admin
@@ -78,6 +79,7 @@ AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
     # Copy the database to a remote folder
     echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
     scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
+    echo "BUD: Last backup was $LATEST"
 
     echo 'BUD: Exiting. Goodbye.'
 #fi
