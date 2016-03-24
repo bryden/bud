@@ -87,7 +87,7 @@ do
     echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
     scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
     echo "BUD: Removing last backup: $LATEST"
-    rmklk $BASEBACKDIR/$LATEST
+    rm $BASEBACKDIR/$LATEST
 
 done
 
