@@ -71,7 +71,7 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
 
     Add this line, replace USERNAME with the user on the server who should run the script (don't use root) and /PATH/TO/SCRIPT/ to the location of bud.sh
     
-        0 24 0 0 0 USERNAME /PATH/TO/SCRIPT/bud.sh
+        0 3 * * * USERNAME /PATH/TO/SCRIPT/bud.sh
 
 License
 =================
