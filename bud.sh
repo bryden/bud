@@ -39,15 +39,6 @@ then
     exit 1
 fi
 
-if [ -z "$SSH_AUTH_SOCK" ]
-then
-    echo "BUD: Starting ssh-agent and adding key"
-    eval `ssh-agent -s`
-    ssh-add
-else
-    echo "BUD: ssh-agent already started"
-fi
-
 echo "BUD: Checking for mysql datadir"
 DATADIR=`mysql -u $USER --password=$PASS -e 'SHOW VARIABLES WHERE Variable_Name = "datadir"' | grep mysql | awk '{print $2}'`
 
