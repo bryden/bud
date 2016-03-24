@@ -39,6 +39,15 @@ then
     exit 1
 fi
 
+if [ -z "$SSH_AUTH_SOCK" ]
+then
+    echo "BUD: Starting ssh-agent and adding key"
+    eval `ssh-agent -s`
+    ssh-add
+else
+    echo "BUD: ssh-agent already started"
+fi
+
 echo "BUD: Checking for mysql datadir"
 DATADIR=`mysql -u $USER --password=$PASS -e 'SHOW VARIABLES WHERE Variable_Name = "datadir"' | grep mysql | awk '{print $2}'`
 
@@ -57,35 +66,29 @@ do
     START=`date +%s` # leave as-is
     TMPFILE="$db-$START.sql" # leave as-is
 
-
     # CHECK FOR LATEST BACKUP
     LATEST=`find $BASEBACKDIR -mindepth 1 -maxdepth 1 -printf "%P\n" | sort -nr | head -1`
-
     AGE=`stat -c %Y $BASEBACKDIR/$LATEST`
-    #echo "AGE : $AGE\n LATEST : $LATEST"
 
-    #if [ "$LATEST" -a `expr $AGE + $FULLBACKUPLIFE + 5` -ge $START ]
-    #then
+    echo "BUD: New full backup"
+    # Create a new full backup
+    echo "BUD: Saving to $BASEBACKDIR/$TMPFILE"
+    mysqldump -u $USER --password=$PASS $db > $BASEBACKDIR/$TMPFILE
+    tar -zcvf $BASEBACKDIR/$TMPFILE.tar.gz $BASEBACKDIR/$TMPFILE
+    rm $BASEBACKDIR/$TMPFILE
+    TMPFILE="$TMPFILE.tar.gz"
 
-    #else
-        echo "BUD: New full backup"
-        # Create a new full backup
-        echo "BUD: Saving to $BASEBACKDIR/$TMPFILE"
-        mysqldump -u $USER --password=$PASS $db > $BASEBACKDIR/$TMPFILE
-        tar -zcvf $BASEBACKDIR/$TMPFILE.tar.gz $BASEBACKDIR/$TMPFILE
-        rm $BASEBACKDIR/$TMPFILE
-        TMPFILE="$TMPFILE.tar.gz"
-    
-        # Email notification to admin
-        MESSAGE="Full backup of MySQL completed successfully for $db.\n"
-        MESSAGE="$MESSAGE $BASEBACKDIR/$TMPFILE\n"
-        echo $MESSAGE | mail -s "BUD: Full backup successful" "$EMAIL"
+    # Email notification to admin
+    MESSAGE="Full backup of MySQL completed successfully for $db.\n"
+    MESSAGE="$MESSAGE $BASEBACKDIR/$TMPFILE\n"
+    echo $MESSAGE | mail -s "BUD: Full backup successful" "$EMAIL"
 
-        # Copy the database to a remote folder
-        echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
-        scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
-        echo "BUD: Removing last backup: $LATEST"
-        rm $BASEBACKDIR/$LATEST
-        echo 'BUD: Exiting. Goodbye.'
-    #fi
+    # Copy the database to a remote folder
+    echo "BUD: Transferring $TMPFILE to $REMOTEHOST:/$REMOTEDIR"
+    scp $BASEBACKDIR/$TMPFILE $REMOTEUSER@$REMOTEHOST:/$REMOTEDIR/
+    echo "BUD: Removing last backup: $LATEST"
+    rmklk $BASEBACKDIR/$LATEST
+
 done
+
+echo 'BUD: Exiting. Goodbye.'
