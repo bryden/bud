@@ -57,6 +57,7 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
 
     Add your ssh key
     
+        eval `ssh-agent -s`
         ssh-add
 
     Test the ssh connection and then exit
@@ -64,9 +65,13 @@ In /etc/my.cnf add these lines **under the MYSQLD section**:
         ssh user@hostname.example.com
         exit
 
-6. Setup cron job. Move the bud.sh script to /etc/cron.daily folder:
+6. Setup cron job.
 
-        sudo mv bud.sh /etc/cron.daily
+        sudo vi /etc/crontab
+
+    Add this line, replace USERNAME with the user on the server who should run the script (don't use root) and /PATH/TO/SCRIPT/ to the location of bud.sh
+    
+        0 24 0 0 0 USERNAME /PATH/TO/SCRIPT/bud.sh
 
 License
 =================
